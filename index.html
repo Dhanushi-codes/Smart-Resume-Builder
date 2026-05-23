@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Resume Maker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      body * { visibility: hidden; }
+      #preview, #preview * { visibility: visible; }
+      #preview { position: absolute; left: 0; top: 0; width: 100%; background: white; color: black; }
+    }
+    .elegant-gradient {
+      background: linear-gradient(135deg, #6b21a8, #a855f7);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-purple-50 to-violet-100">
+<div class="max-w-7xl mx-auto p-6">
+  <div class="text-center mb-10">
+    <h1 class="text-5xl font-bold elegant-gradient bg-clip-text text-transparent">
+      ✨ Smart Resume Maker
+    </h1>
+    <p class="text-purple-600 mt-2 text-lg">Craft Elegant Professional Resumes</p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    
+    <!-- Form -->
+    <div class="bg-white p-10 rounded-3xl shadow-2xl border border-purple-100">
+      <h2 class="text-3xl font-semibold mb-8 text-purple-800">Build Your Masterpiece</h2>
+      
+      <form id="resumeForm" class="space-y-6">
+
+        <div class="grid grid-cols-2 gap-4">
+          <input type="text" id="full_name" placeholder="Full Name" class="p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500" required>
+          <input type="email" id="email" placeholder="Email" class="p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500" required>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4">
+          <input type="text" id="phone" placeholder="Phone Number" class="p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500" required>
+          <input type="text" id="location" value="Mumbai, Maharashtra" class="p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <input type="url" id="linkedin" placeholder="LinkedIn URL" class="p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500">
+          <input type="url" id="github" placeholder="GitHub URL" class="p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500">
+        </div>
+
+        <textarea id="summary" rows="3" placeholder="Write a compelling professional summary..." class="w-full p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500"></textarea>
+
+        <div>
+          <label class="block text-sm font-medium mb-2 text-purple-700">Experience</label>
+          <textarea id="experience" rows="4" placeholder="Company • Position • Dates..." class="w-full p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-2 text-purple-700">Projects</label>
+          <textarea id="projects" rows="3" placeholder="Project Name - What you built..." class="w-full p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-2 text-purple-700">Education</label>
+            <textarea id="education" rows="3" placeholder="Degree, College, Year" class="w-full p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2 text-purple-700">Skills</label>
+            <input type="text" id="skills" placeholder="Python, React, FastAPI..." class="w-full p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium mb-2 text-purple-700">Achievements</label>
+            <textarea id="achievements" rows="2" placeholder="• Notable achievements..." class="w-full p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500"></textarea>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-2 text-purple-700">Certifications</label>
+            <textarea id="certifications" rows="2" placeholder="AWS, Google..." class="w-full p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500"></textarea>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-2 text-purple-700">Hobbies / Interests</label>
+          <input type="text" id="hobbies" placeholder="Photography, Reading, Travel" class="w-full p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium mb-2 text-purple-700">Template Style</label>
+          <select id="template" class="w-full p-4 border border-purple-200 rounded-2xl focus:border-purple-500 focus:ring-purple-500">
+            <option value="modern">Modern Elegant</option>
+            <option value="creative">Creative Vibrant</option>
+            <option value="classic">Classic Professional</option>
+          </select>
+        </div>
+
+        <button type="submit" class="w-full elegant-gradient text-white py-5 rounded-2xl font-semibold text-xl hover:scale-105 transition-transform shadow-lg">
+          Generate Elegant Resume
+        </button>
+      </form>
+    </div>
+
+    <!-- Preview -->
+    <div class="bg-white p-10 rounded-3xl shadow-2xl border border-purple-100">
+      <div class="flex justify-between items-center mb-8">
+        <h2 class="text-3xl font-semibold text-purple-800">Live Preview</h2>
+        <button onclick="downloadPDF()" class="bg-emerald-600 text-white px-8 py-4 rounded-2xl hover:bg-emerald-700 transition font-medium">
+          📄 Download PDF
+        </button>
+      </div>
+      <div id="preview" class="bg-white border-2 border-purple-100 shadow-sm min-h-[850px] p-12 text-sm leading-relaxed rounded-2xl"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('resumeForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = {
+      full_name: document.getElementById('full_name').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      location: document.getElementById('location').value,
+      linkedin: document.getElementById('linkedin').value,
+      github: document.getElementById('github').value,
+      summary: document.getElementById('summary').value,
+      experience: document.getElementById('experience').value,
+      projects: document.getElementById('projects').value,
+      education: document.getElementById('education').value,
+      achievements: document.getElementById('achievements').value,
+      certifications: document.getElementById('certifications').value,
+      hobbies: document.getElementById('hobbies').value,
+      skills: document.getElementById('skills').value.split(',').map(s => s.trim()).filter(Boolean),
+      template: document.getElementById('template').value
+    };
+
+    try {
+      const res = await fetch('http://127.0.0.1:8000/generate-resume', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+
+      const preview = document.getElementById('preview');
+      preview.className = `${result.template} bg-white border-2 border-purple-100 shadow-sm min-h-[850px] p-12 text-sm leading-relaxed rounded-2xl`;
+
+      preview.innerHTML = `
+        <div class="max-w-3xl mx-auto">
+          <h1 class="text-5xl font-bold text-center mb-2 text-purple-900">${data.full_name}</h1>
+          <p class="text-center text-purple-600 mb-8">${data.location} • ${data.email} • ${data.phone}</p>
+          
+          ${data.linkedin || data.github ? `
+          <p class="text-center text-violet-600 text-sm mb-10">
+            ${data.linkedin ? '🔗 LinkedIn' : ''} ${data.github ? ' • GitHub' : ''}
+          </p>` : ''}
+          
+          <h2 class="text-2xl font-semibold mb-4 text-purple-800 border-b border-purple-200 pb-3">PROFESSIONAL SUMMARY</h2>
+          <p class="mb-10 text-gray-700">${data.summary || "Dynamic and results-driven professional..."}</p>
+
+          <h2 class="text-2xl font-semibold mb-4 text-purple-800 border-b border-purple-200 pb-3">EXPERIENCE</h2>
+          <div class="mb-10 whitespace-pre-line text-gray-700">${data.experience || ""}</div>
+
+          <h2 class="text-2xl font-semibold mb-4 text-purple-800 border-b border-purple-200 pb-3">PROJECTS</h2>
+          <div class="mb-10 whitespace-pre-line text-gray-700">${data.projects || ""}</div>
+
+          <h2 class="text-2xl font-semibold mb-4 text-purple-800 border-b border-purple-200 pb-3">EDUCATION</h2>
+          <div class="mb-10 whitespace-pre-line text-gray-700">${data.education}</div>
+
+          ${data.achievements ? `<h2 class="text-2xl font-semibold mb-4 text-purple-800 border-b border-purple-200 pb-3">ACHIEVEMENTS</h2><div class="mb-10 whitespace-pre-line text-gray-700">${data.achievements}</div>` : ''}
+          ${data.certifications ? `<h2 class="text-2xl font-semibold mb-4 text-purple-800 border-b border-purple-200 pb-3">CERTIFICATIONS</h2><div class="mb-10 whitespace-pre-line text-gray-700">${data.certifications}</div>` : ''}
+
+          <h2 class="text-2xl font-semibold mb-4 text-purple-800 border-b border-purple-200 pb-3">SKILLS</h2>
+          <p class="mb-10 text-gray-700">${data.skills.join(" • ")}</p>
+
+          ${data.hobbies ? `<h2 class="text-2xl font-semibold mb-4 text-purple-800 border-b border-purple-200 pb-3">INTERESTS</h2><p class="text-gray-700">${data.hobbies}</p>` : ''}
+        </div>
+      `;
+    } catch (err) {
+      alert("Make sure your FastAPI server is running on http://127.0.0.1:8000");
+    }
+  });
+
+  function downloadPDF() {
+    window.print();
+  }
+</script>
+</body>
+</html>
